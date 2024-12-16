@@ -12,20 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const user_1 = __importDefault(require("./router/user"));
-const db_1 = require("./db");
-const app = (0, express_1.default)();
-dotenv_1.default.config();
-function dbcall() {
+exports.connectDB = connectDB;
+const mongoose_1 = __importDefault(require("mongoose"));
+const config_1 = require("./config");
+function connectDB() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield (0, db_1.connectDB)();
+        try {
+            if (!config_1.MONGODB_URI) {
+                throw new Error("MONGO_URI is not defined");
+            }
+            const db = yield mongoose_1.default.connect(config_1.MONGODB_URI);
+            console.log(`MongoDB connected: ${db.connection.host}`);
+        }
+        catch (error) {
+            console.error(error);
+        }
     });
 }
-dbcall();
-app.use("/api/user/v1", user_1.default);
-app.get("/", (req, res) => {
-    res.send("helloworld");
-});
-app.listen(process.env.PORT, () => console.log('Port ', process.env.PORT));
