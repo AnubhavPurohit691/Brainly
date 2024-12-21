@@ -1,1 +1,1 @@
-{"root":["./src/config.ts","./src/db.ts","./src/index.ts","./src/controller/usercontroller.ts","./src/router/user.ts"],"version":"5.7.2"}
+{"root":["./src/config.ts","./src/db.ts","./src/index.ts","./src/zodschema.ts","./src/controller/usercontroller.ts","./src/model/contentmodel.ts","./src/model/linkmodel.ts","./src/model/tagmodel.ts","./src/model/usermodel.ts","./src/router/user.ts"],"version":"5.7.2"}

@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const LinkSchema = new Schema(
   {
-    token: {
+    sharelink: {
       type: String,
       required: true,
       unique: true,
