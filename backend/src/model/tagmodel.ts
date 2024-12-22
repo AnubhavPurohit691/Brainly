@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const tagmodel= new Schema({
-    title:{
+    tags:{
         type:String,
         require:true,
         unique:true
