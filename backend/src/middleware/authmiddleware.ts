@@ -7,7 +7,7 @@ export interface Authrequest extends Request{
     userId:string
 }
 
-export function authmiddleware(req:Authrequest,res:Response,next:NextFunction){
+export function authmiddleware(req:Authrequest,res:Response,next:NextFunction):void{
 
     try {
         const token = String(req.header("Authorization")?.split(' ')[1])
@@ -16,11 +16,13 @@ export function authmiddleware(req:Authrequest,res:Response,next:NextFunction){
             res.status(403).json({
                 message:"No token provided"
             })
+            return
         }
         const decoded = jwt.verify(token,process.env.JWT_SECRET||"secret") as JwtPayload
 
         req.userId=decoded.id
         next()
+        
     } catch (error) {
         res.status(411).json({
             message:"server error"
