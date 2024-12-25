@@ -4,13 +4,13 @@ import dotenv from "dotenv"
 dotenv.config()
 
 export interface Authrequest extends Request{
-    userId:string
+    userId?:string
 }
 
-export function authmiddleware(req:Authrequest,res:Response,next:NextFunction):void{
+export function authmiddleware(req:Authrequest,res:Response,next:NextFunction){
 
     try {
-        const token = String(req.header("Authorization")?.split(' ')[1])
+        const token = req.header("Authorization")?.split(' ')[1]
 
         if (!token){
             res.status(403).json({

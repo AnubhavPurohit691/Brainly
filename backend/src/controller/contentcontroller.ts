@@ -65,3 +65,8 @@ try {
     })
 }
 }
+
+export function deletecontent(req:Request,res:Response){
+
+
+}

@@ -12,26 +12,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const user_1 = __importDefault(require("./router/user"));
-const db_1 = require("./db");
-const config_1 = require("./config");
-const content_1 = __importDefault(require("./router/content"));
-const tags_1 = __importDefault(require("./router/tags"));
-const link_1 = __importDefault(require("./router/link"));
-const app = (0, express_1.default)();
-app.use(express_1.default.json());
-function dbcall() {
+exports.gettags = gettags;
+const tagmodel_1 = __importDefault(require("../model/tagmodel"));
+function gettags(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield (0, db_1.connectDB)();
+        try {
+            const gettags = yield tagmodel_1.default.find();
+            if (!gettags) {
+                res.status(403).json({
+                    message: "no tags found"
+                });
+                return;
+            }
+            res.status(200).json({
+                gettags,
+                message: "tags found"
+            });
+        }
+        catch (error) {
+            res.status(500).json({
+                message: "server error"
+            });
+        }
     });
 }
-dbcall();
-app.use("/api/user/v1", user_1.default);
-app.use("/api/content/v1", content_1.default);
-app.use("/api/tags/v1", tags_1.default);
-app.use("/api/link/v1", link_1.default);
-app.get("/", (req, res) => {
-    res.send("checking db");
-});
-app.listen(config_1.PORT, () => console.log('Port ', process.env.PORT));
